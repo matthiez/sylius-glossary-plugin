@@ -1,0 +1,7 @@
+{% from '@SyliusAdmin/Macro/translationForm.html.twig' import translationFormWithSlug, translationForm %}
+
+{{ form_errors(form) }}
+
+{{ form_row(form.enabled) }}
+
+{{ translationForm(form.translations, '@EcolosSyliusGlossaryPlugin/Glossary/Crud/_slugField.html.twig') }}

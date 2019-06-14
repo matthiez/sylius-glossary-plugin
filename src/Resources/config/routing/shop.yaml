@@ -1,0 +1,28 @@
+ecolos_sylius_glossary_plugin_list:
+  path:
+    de: /glossar
+  methods: [GET]
+  defaults:
+    _controller: EcolosSyliusGlossaryPlugin:Glossary:index
+    _sylius:
+      template: "@EcolosSyliusGlossaryPlugin/Glossary/index.html.twig"
+      repository:
+        method: findAll
+
+ecolos_sylius_glossary_plugin_show:
+  path:
+    de: /glossar/{slug}
+  methods: [GET]
+  defaults:
+    _controller: EcolosSyliusGlossaryPlugin:Glossary:show
+    _sylius:
+      template: "@EcolosSyliusGlossaryPlugin/Glossary/show.html.twig"
+
+ecolos_sylius_glossary_plugin_entry:
+  path:
+    de: /glossar/{glossary_slug}/{entry_slug}
+  methods: [GET]
+  defaults:
+    _controller: EcolosSyliusGlossaryPlugin:Glossary:entry
+    _sylius:
+      template: "@EcolosSyliusGlossaryPlugin/Glossary/entry.html.twig"

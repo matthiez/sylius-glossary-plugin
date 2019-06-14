@@ -1,0 +1,33 @@
+ecolos_sylius_glossary_plugin_admin_glossary:
+  resource: |
+    alias: ecolos_sylius_glossary_plugin.glossary
+    path: glossaries
+    section: admin
+    templates: SyliusAdminBundle:Crud
+    redirect: update
+    grid: ecolos_sylius_glossary_plugin_admin_glossary
+    vars:
+        all:
+            subheader: ecolos_sylius_glossary_plugin.ui.glossary
+            templates:
+                form: "@EcolosSyliusGlossaryPlugin/Glossary/_form.html.twig"
+        index:
+            icon: 'file image outline'
+  type: sylius.resource
+
+ecolos_sylius_glossary_plugin_admin_glossary_entry:
+  resource: |
+    alias: ecolos_sylius_glossary_plugin.glossary_entry
+    path: glossary-entries
+    section: admin
+    templates: SyliusAdminBundle:Crud
+    redirect: update
+    grid: ecolos_sylius_glossary_plugin_admin_glossary_entry
+    vars:
+        all:
+            subheader: ecolos_sylius_glossary_plugin.ui.glossary_entry
+            templates:
+                form: "@EcolosSyliusGlossaryPlugin/Glossary/_subform.html.twig"
+        index:
+            icon: 'file image outline'
+  type: sylius.resource

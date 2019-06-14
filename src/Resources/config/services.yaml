@@ -1,0 +1,52 @@
+services:
+  ecolos_sylius_glossary_plugin.form.type.glossary_choice:
+    class: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryChoiceType
+    arguments:
+      - "@ecolos_sylius_glossary_plugin.repository.glossary"
+    tags:
+      - { name: form.type , alias: ecolos_sylius_glossary_plugin_glossary_choice }
+
+  ecolos_sylius_glossary_plugin.form.type.glossary_entry_choice:
+    class: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryEntryChoiceType
+    arguments:
+      - "@ecolos_sylius_glossary_plugin.repository.glossary_entry"
+    tags:
+      - { name: form.type , alias: ecolos_sylius_glossary_plugin_glossary_entry_choice }
+
+  ecolos_sylius_glossary_plugin.glossary.form.type:
+    class: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryType
+    tags:
+      - { name: form.type }
+    arguments: ['%ecolos_sylius_glossary_plugin.model.glossary.class%', ['sylius']]
+
+  ecolos_sylius_glossary_plugin.glossary_entry.form.type:
+    class: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryEntryType
+    tags:
+      - { name: form.type }
+    arguments: ['%ecolos_sylius_glossary_plugin.model.glossary_entry.class%', ['sylius']]
+
+  ecolos_sylius_glossary_plugin.glossary_entry_ranslation.form.type:
+    class: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryEntryTranslationType
+    tags:
+      - { name: form.type }
+    arguments: ['%ecolos_sylius_glossary_plugin.model.glossary_entry_translation.class%', ['sylius']]
+
+  ecolos_sylius_glossary_plugin.glossary_translation.form.type:
+    class: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryTranslationType
+    tags:
+      - { name: form.type }
+    arguments: ['%ecolos_sylius_glossary_plugin.model.glossary_translation.class%', ['sylius']]
+
+  ecolos_sylius_glossary_plugin.listener.admin.menu_builder:
+    class: Ecolos\SyliusGlossaryPlugin\Menu\AdminMenuListener
+    tags:
+      - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
+
+  Ecolos\SyliusGlossaryPlugin\Controller\GlossaryController:
+    class: Ecolos\SyliusGlossaryPlugin\Controller\GlossaryController
+    arguments:
+      - '@templating'
+      - "@ecolos_sylius_glossary_plugin.repository.glossary"
+      - "@ecolos_sylius_glossary_plugin.repository.glossary_translation"
+      - "@ecolos_sylius_glossary_plugin.repository.glossary_entry"
+    tags: ['controller.service_arguments']

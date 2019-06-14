@@ -1,0 +1,19 @@
+sylius_resource:
+  resources:
+    ecolos_sylius_glossary_plugin.glossary:
+      classes:
+        model: Ecolos\SyliusGlossaryPlugin\Entity\Glossary
+        form: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryType
+      translation:
+        classes:
+          model: Ecolos\SyliusGlossaryPlugin\Entity\GlossaryTranslation
+          form: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryTranslationType
+
+    ecolos_sylius_glossary_plugin.glossary_entry:
+      classes:
+        model: Ecolos\SyliusGlossaryPlugin\Entity\GlossaryEntry
+        form: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryEntryType
+      translation:
+        classes:
+          model: Ecolos\SyliusGlossaryPlugin\Entity\GlossaryEntryTranslation
+          form: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryEntryTranslationType

@@ -1,0 +1,34 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% block title %}{{ glossary.name }}{% endblock %}
+
+{% block metatags %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ glossary.name }}</h1>
+
+    <div class="ui stackable grid">
+        <div class="sixteen wide column">
+            {{ glossary.description | raw }}
+        </div>
+    </div>
+
+    <div class="ui grid mt-1">
+        {% if entries|length %}
+            {% for entry in entries if entry.slug | length %}
+                <div class="center aligned four wide column">
+                    <a href="{{ path('ecolos_sylius_glossary_plugin_entry', { glossary_slug: glossary.slug, entry_slug: entry.slug }) }}">
+                        {{ entry.name }}
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div>
+                <p class="align centered" style="text-align: center; width: 100%;">
+                    {{ 'ecolos_sylius_glossary_plugin.no_entries' | trans }}
+                </p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+sylius_grid:
+  grids:
+    ecolos_sylius_glossary_plugin_admin_glossary:
+      driver:
+        name: doctrine/orm
+        options:
+          class: Ecolos\SyliusGlossaryPlugin\Entity\Glossary
+      fields:
+        enabled:
+          type: twig
+          label: sylius.ui.enabled
+          options:
+            template: "@SyliusUi/Grid/Field/enabled.html.twig"
+        name:
+          type: string
+          label: sylius.ui.name
+          sortable: translation.name
+      actions:
+        main:
+          create:
+            type: create
+        item:
+          update:
+            type: update
+          delete:
+            type: delete
+
+    ecolos_sylius_glossary_plugin_admin_glossary_entry:
+      driver:
+        name: doctrine/orm
+        options:
+          class: Ecolos\SyliusGlossaryPlugin\Entity\GlossaryEntry
+      fields:
+        enabled:
+          type: twig
+          label: sylius.ui.enabled
+          options:
+            template: "@SyliusUi/Grid/Field/enabled.html.twig"
+        name:
+          type: string
+          label: sylius.ui.name
+          sortable: translation.name
+      actions:
+        main:
+          create:
+            type: create
+        item:
+          update:
+            type: update
+          delete:
+            type: delete

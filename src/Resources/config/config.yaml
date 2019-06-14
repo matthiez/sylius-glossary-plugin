@@ -1,0 +1,4 @@
+imports:
+  - { resource: "@EcolosSyliusGlossaryPlugin/Resources/config/resources.yaml" }
+  - { resource: "@EcolosSyliusGlossaryPlugin/Resources/config/grids.yaml" }
+  - { resource: "@EcolosSyliusGlossaryPlugin/Resources/config/services.yaml" }

@@ -1,0 +1,14 @@
+ecolos_sylius_glossary_plugin:
+  glossary: Glossar
+  glossaries: Glossarien
+  entries: Einträge
+  no_entries: Dieser Glossar hat noch keine Einträge.
+  ui:
+    glossary_entry: Hinzufügen/ändern
+    glossary_entries: Glossareinträge
+    glossary: Glossareintrag
+    edit_glossary: Glossareintrag editieren
+    new_glossary: Neuer Glossareintrag
+    glossaries: Glossarien
+    edit_glossary_entry: Glossareintrag ändern
+    new_glossary_entry: Neuer Glossareintrag
