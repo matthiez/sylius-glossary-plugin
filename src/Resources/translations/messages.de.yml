@@ -3,6 +3,8 @@ ecolos_sylius_glossary_plugin:
   glossaries: Glossarien
   entries: Einträge
   no_entries: Dieser Glossar hat noch keine Einträge.
+  no_glossaries: Es sind noch keine Glossarien vorhanden.
+  no_entry_description: Dieser Glossareintrag hat noch keine Beschreibung.
   ui:
     glossary_entry: Hinzufügen/ändern
     glossary_entries: Glossareinträge

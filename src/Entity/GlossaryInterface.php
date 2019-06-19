@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Ecolos\SyliusGlossaryPlugin\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 interface GlossaryInterface
 {
     public function getId(): ?int;
@@ -22,4 +24,8 @@ interface GlossaryInterface
     public function setSlug(string $name): void;
 
     public function getSlug(): string;
+
+    public function getEntries(): ArrayCollection;
+
+    public function setEntries($entries): void;
 }

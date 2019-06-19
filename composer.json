@@ -12,7 +12,9 @@
   ],
   "require": {
     "php": "^7.2",
-    "sylius/sylius": "^1.4"
+    "sylius/sylius": "^1.4",
+    "stefandoorn/sitemap-plugin": "^1.1",
+    "symfony/serializer": "^3.4|^4.1"
   },
   "require-dev": {
     "behat/behat": "^3.4",

@@ -4,15 +4,20 @@ declare(strict_types=1);
 namespace Ecolos\SyliusGlossaryPlugin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TranslatableInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @Entity
@@ -20,6 +25,32 @@ use Doctrine\ORM\Mapping\GeneratedValue;
  */
 class GlossaryEntry implements GlossaryEntryInterface, ResourceInterface, TranslatableInterface
 {
+    /**
+     * @Column(type="integer", nullable=true)
+     * @var integer
+     */
+    protected $alias;
+
+    /**
+     * @Column(name="enabled", type="boolean", nullable=false)
+     * @var bool
+     */
+    protected $enabled;
+
+    /**
+     * @ManyToMany(targetEntity="Ecolos\SyliusGlossaryPlugin\Entity\Glossary", inversedBy="entries")
+     * @JoinTable(name="ecolos_glossary_entries")
+     */
+    protected $glossaries;
+
+    /**
+     * @Column(type="integer")
+     * @Id()
+     * @GeneratedValue()
+     * @var int
+     */
+    protected $id;
+
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
     }
@@ -30,44 +61,6 @@ class GlossaryEntry implements GlossaryEntryInterface, ResourceInterface, Transl
 
         $this->glossaries = new ArrayCollection();
     }
-
-    /**
-     * @Column(type="integer", nullable=true)
-     * @var integer
-     */
-    private $alias;
-
-    /**
-     * @Column(type="text", nullable=true)
-     * @var string|null
-     */
-    private $description;
-
-    /**
-     * @Column(name="enabled", type="boolean", nullable=false)
-     * @var bool
-     */
-    private $enabled;
-
-    /**
-     * @Column(type="array")
-     * @var Collection|int[]
-     */
-    private $glossaries;
-
-    /**
-     * @Column(type="integer")
-     * @Id()
-     * @GeneratedValue()
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @Column(type="string", nullable=true)
-     * @var string
-     */
-    private $name;
 
     public function getAlias(): ?int
     {
@@ -94,15 +87,20 @@ class GlossaryEntry implements GlossaryEntryInterface, ResourceInterface, Transl
         $this->enabled = $enabled;
     }
 
-    public function getGlossaries(): Collection
+    public function getGlossaries()
     {
         return $this->glossaries;
     }
 
-    public function setGlossaries(ArrayCollection $glossaries): void
+    public function setGlossaries($glossaries): void
     {
-        foreach ($glossaries->toArray() as $glossary)
-            $this->glossaries->add($glossary);
+        if ($glossaries instanceof ArrayCollection) {
+            $glossaries = $glossaries->toArray();
+        }
+
+        foreach ($glossaries as $glossary) {
+            array_push($this->glossaries, $glossary);
+        }
     }
 
     public function getId(): ?int
@@ -138,6 +136,17 @@ class GlossaryEntry implements GlossaryEntryInterface, ResourceInterface, Transl
     public function setSlug(string $slug): void
     {
         $this->getTranslation()->setSlug($slug);
+    }
+
+    public function serializer()
+    {
+        $normalizer = new ObjectNormalizer();
+
+        $normalizer->setCircularReferenceHandler(function (GlossaryEntryInterface $object) {
+            return $object->getName();
+        });
+
+        return (new Serializer([$normalizer], [new JsonEncoder()]))->serialize($this, 'json');
     }
 
     /**

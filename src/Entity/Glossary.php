@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Ecolos\SyliusGlossaryPlugin\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
@@ -11,6 +12,8 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TranslatableInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @Entity
@@ -18,26 +21,17 @@ use Doctrine\ORM\Mapping\GeneratedValue;
  */
 class Glossary implements GlossaryInterface, ResourceInterface, TranslatableInterface
 {
-    use TranslatableTrait {
-        __construct as private initializeTranslationsCollection;
-    }
-
-    public function __construct()
-    {
-        $this->initializeTranslationsCollection();
-    }
-
-    /**
-     * @Column(type="text", nullable=true)
-     * @var string|null
-     */
-    private $description;
-
     /**
      * @Column(name="enabled", type="boolean", nullable=false)
      * @var bool
      */
-    private $enabled;
+    protected $enabled;
+
+    /**
+     * @ManyToMany(targetEntity="Ecolos\SyliusGlossaryPlugin\Entity\GlossaryEntry", mappedBy="glossaries")
+     * @JoinTable(name="ecolos_glossary_entries")
+     */
+    protected $entries;
 
     /**
      * @Column(type="integer")
@@ -47,17 +41,16 @@ class Glossary implements GlossaryInterface, ResourceInterface, TranslatableInte
      */
     private $id;
 
-    /**
-     * @Column(type="string", nullable=true)
-     * @var string
-     */
-    private $name;
+    use TranslatableTrait {
+        __construct as private initializeTranslationsCollection;
+    }
 
-    /**
-     * @Column(type="string", nullable=true)
-     * @var string
-     */
-    private $slug;
+    public function __construct()
+    {
+        $this->initializeTranslationsCollection();
+
+        $this->entries = new ArrayCollection();
+    }
 
     public function isEnabled(): ?bool
     {
@@ -107,6 +100,22 @@ class Glossary implements GlossaryInterface, ResourceInterface, TranslatableInte
     public function setSlug(string $slug): void
     {
         $this->getTranslation()->setSlug($slug);
+    }
+
+    public function getEntries(): ArrayCollection
+    {
+        return $this->entries;
+    }
+
+    public function setEntries($entries): void
+    {
+        if ($entries instanceof ArrayCollection) {
+            $entries = $entries->toArray();
+        }
+
+        foreach ($entries as $entry) {
+            array_push($this->entries, $entry);
+        }
     }
 
     /**

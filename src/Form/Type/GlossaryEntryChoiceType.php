@@ -14,9 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class GlossaryEntryChoiceType extends AbstractType
 {
-    /**
-     * @var RepositoryInterface
-     */
+    /** @var RepositoryInterface */
     private $glossaryEntryRepository;
 
     public function __construct(RepositoryInterface $glossaryEntryRepository)
@@ -32,14 +30,20 @@ final class GlossaryEntryChoiceType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'choices' => array_reduce(
-                $this->glossaryEntryRepository->findBy([], ['name' => 'ASC']),
-                function (array $arr, GlossaryEntryInterface $glossaryEntry) {
-                    $arr[$glossaryEntry->getName()] = $glossaryEntry->getId();
+        $entries = array_keys(array_reduce(
+            $this->glossaryEntryRepository->findAll(),
+            function (array $arr, GlossaryEntryInterface $glossaryEntry) {
+                $arr[$glossaryEntry->getName()] = $glossaryEntry->getId();
 
-                    return $arr;
-                }, []),
+                return $arr;
+            }, []));
+
+        usort($entries, function ($a, $b) {
+            return strcmp($a, $b);
+        });
+
+        $resolver->setDefaults([
+            'choices' => array_flip($entries),
         ]);
     }
 

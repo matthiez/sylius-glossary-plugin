@@ -9,12 +9,18 @@
     <h1>{{ 'ecolos_sylius_glossary_plugin.glossaries' | trans }}</h1>
 
     <div class="ui grid mt-1">
-        {% for glossar in glossaries if glossar.slug | length %}
-            <div class="center aligned four wide column">
-                <a href="{{ path('ecolos_sylius_glossary_plugin_show', { slug: glossar.slug }) }}">
-                    {{ glossar.name }}
-                </a>
-            </div>
-        {% endfor %}
+        {% if glossaries|length %}
+            {% for glossar in glossaries if glossar.slug | length %}
+                <div class="center aligned four wide column">
+                    <a href="{{ path('ecolos_sylius_glossary_plugin_show', { slug: glossar.slug }) }}">
+                        {{ glossar.name }}
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>
+                {{ 'ecolos_sylius_glossary_plugin.no_glossaries' | trans }}
+            </p>
+        {% endif %}
     </div>
 {% endblock %}

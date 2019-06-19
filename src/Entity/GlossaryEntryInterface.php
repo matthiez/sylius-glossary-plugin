@@ -3,18 +3,15 @@ declare(strict_types=1);
 
 namespace Ecolos\SyliusGlossaryPlugin\Entity;
 
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-
 interface GlossaryEntryInterface
 {
     public function setAlias(?int $alias): void;
 
     public function getAlias(): ?int;
 
-    public function setGlossaries(ArrayCollection $glossar): void;
+    public function setGlossaries($glossaries): void;
 
-    public function getGlossaries(): Collection;
+    public function getGlossaries();
 
     public function getId(): ?int;
 
@@ -29,4 +26,10 @@ interface GlossaryEntryInterface
     public function setEnabled(bool $enabled): void;
 
     public function getEnabled(): ?bool;
+
+    public function isEnabled(): ?bool;
+
+    public function setSlug(string $name): void;
+
+    public function getSlug(): string;
 }

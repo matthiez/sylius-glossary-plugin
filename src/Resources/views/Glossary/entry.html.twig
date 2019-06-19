@@ -10,7 +10,13 @@
 
     <div class="ui stackable grid">
         <div class="sixteen wide column">
-            {{ entry.description | raw }}
+            {% if entry.description | length %}
+                {{ entry.description | raw }}
+            {% else %}
+                <p>
+                    {{ 'ecolos_sylius_glossary_plugin.no_entry_description' | trans }}
+                </p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

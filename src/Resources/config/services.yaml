@@ -1,11 +1,4 @@
 services:
-  ecolos_sylius_glossary_plugin.form.type.glossary_choice:
-    class: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryChoiceType
-    arguments:
-      - "@ecolos_sylius_glossary_plugin.repository.glossary"
-    tags:
-      - { name: form.type , alias: ecolos_sylius_glossary_plugin_glossary_choice }
-
   ecolos_sylius_glossary_plugin.form.type.glossary_entry_choice:
     class: Ecolos\SyliusGlossaryPlugin\Form\Type\GlossaryEntryChoiceType
     arguments:
