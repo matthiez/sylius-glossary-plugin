@@ -1,0 +1,9 @@
+ecolos_sylius_glossary_plugin_shop:
+  resource: "@EcolosSyliusGlossaryPlugin/Resources/config/shop_routing.yml"
+  prefix: /{_locale}
+  requirements:
+    _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+
+ecolos_sylius_glossary_plugin_admin:
+  resource: "@EcolosSyliusGlossaryPlugin/Resources/config/admin_routing.yml"
+  prefix: /admin
